@@ -1,5 +1,5 @@
 from collections import UserDict
-from datetime import datetime
+from datetime import date, datetime
 from date_utils import adjust_for_weekend
 
 class Field:
@@ -94,6 +94,9 @@ class Birthday(Field):
         except ValueError:
             raise ValueError("Invalid date format. Use DD.MM.YYYY")
         super().__init__(date)
+    
+    def __str__(self):
+        return self.value.strftime("%d.%m.%Y")
 
 def input_error(func):
     def inner(*args, **kwargs):
@@ -107,6 +110,7 @@ def input_error(func):
             return "Name is not found."
     return inner
 
+@input_error
 def parse_input(user_input):
     cmd, *args = user_input.split()
     cmd = cmd.strip().lower()
@@ -177,7 +181,7 @@ def change_contact(args, book: AddressBook):
     record.edit_phone(old_phone, new_phone)
     return "Phone number updated."
 
-
+@input_error
 def show_phone(args, book: AddressBook):
     name, *_ = args
 
@@ -190,6 +194,7 @@ def show_phone(args, book: AddressBook):
 
     return "; ".join(phone.value for phone in record.phones)
 
+@input_error
 def show_all_contacts(args, book):
     if not book.data:
         return "Address book is empty."
