@@ -113,7 +113,7 @@ class Birthday(Field):
 
     
     def __str__(self):
-        return self.value.strftime("%d.%m.%Y")
+        return self.value
 
 def input_error(func):
     def inner(*args, **kwargs):
@@ -127,6 +127,8 @@ def input_error(func):
             return "Contact not found."
         except AttributeError:
             return "Contact not found."
+        except NameError:
+            return "Unexpected error"
     return inner
 
 
