@@ -72,7 +72,10 @@ class AddressBook(UserDict):
             if record.birthday is None:
                 continue
 
-            birthday_this_year = record.birthday.value.replace(year=today.year)
+            birthday_date = datetime.strptime(record.birthday.value, "%d.%m.%Y").date()
+
+            birthday_this_year = birthday_date.replace(year=today.year)
+
             if birthday_this_year < today:
                 birthday_this_year = birthday_this_year.replace(year=today.year + 1)
 
@@ -81,10 +84,11 @@ class AddressBook(UserDict):
             if 0 <= (congratulation_date - today).days <= days:
                 result.append({
                     "name": record.name.value,
-                    "congratulation_date": congratulation_date.strftime("%d.%m.%Y") #can't make this key as "birthday", because "birthday" is already exists in adjust_for_weekend(birthday):
+                    "congratulation_date": congratulation_date.strftime("%d.%m.%Y")
                 })
 
         return result
+
  
     def __str__(self):
         if not self.data:
