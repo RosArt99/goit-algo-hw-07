@@ -131,8 +131,6 @@ def input_error(func):
             return "Contact not found."
         except AttributeError:
             return "Contact not found."
-        except NameError:
-            return "Unexpected error"
     return inner
 
 

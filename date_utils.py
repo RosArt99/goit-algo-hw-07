@@ -1,3 +1,6 @@
+from collections import UserDict
+from datetime import timedelta
+
 def find_next_weekday(start_date, weekday):
     days_ahead = weekday - start_date.weekday()
     if days_ahead <= 0:
